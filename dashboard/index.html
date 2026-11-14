@@ -1,0 +1,160 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Bangladesh Apparel After LDC</title>
+<meta name="description" content="Where should Bangladeshi apparel compete after LDC graduation? Market shares, prices, tariff exposure and EU access scenarios from Eurostat, UN Comtrade and WITS.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
+<script src="https://cdn.jsdelivr.net/npm/echarts@5.5.1/dist/echarts.min.js"></script>
+</head>
+<body>
+<header class="top">
+  <div class="brand">
+    <div class="mark" aria-hidden="true"></div>
+    <div>
+      <div class="name">Bangladesh apparel after LDC graduation</div>
+      <div class="sub" id="sub">Where to compete next, by product and market</div>
+    </div>
+  </div>
+  <div class="real">Real trade data · Eurostat, UN Comtrade, WITS</div>
+</header>
+
+<nav class="tabs" role="tablist">
+  <button data-tab="answer" class="on">The answer</button>
+  <button data-tab="share">Market share</button>
+  <button data-tab="price">Price per unit</button>
+  <button data-tab="tariff">Tariffs and scenarios</button>
+  <button data-tab="now">2026 so far</button>
+  <button data-tab="method">Method and sources</button>
+</nav>
+
+<main>
+<!-- THE ANSWER -->
+<section class="page on" id="p-answer">
+  <div class="card answer">
+    <div class="q">The question</div>
+    <h2>Bangladesh keeps duty-free access to the EU until about 2032, then loses it unless GSP+ or a deal replaces it. Where should its apparel compete next?</h2>
+    <p id="answer-text"></p>
+  </div>
+  <div class="kpis" id="kpis"></div>
+  <div class="bets">
+    <div class="bet">
+      <div class="n">Bet 1 · Defend</div>
+      <h3>EU knitwear: make it GSP+ ready</h3>
+      <p id="bet1"></p>
+      <dl><dt>Risk</dt><dd>The GSP+ safeguard for apparel triggers anyway; China keeps regaining EU share.</dd>
+          <dt>Watch</dt><dd>EU decision on Bangladesh's GSP+ application and the apparel safeguard threshold.</dd></dl>
+    </div>
+    <div class="bet" style="border-top-color: var(--ink)">
+      <div class="n" style="color: var(--ink)">Bet 2 · Redirect</div>
+      <h3>Woven trousers and shirts: grow in the US and UK</h3>
+      <p id="bet2"></p>
+      <dl><dt>Risk</dt><dd>US tariffs on Bangladesh end up higher than on Vietnam.</dd>
+          <dt>Watch</dt><dd>USTR Section 301 outcomes for Bangladesh and Vietnam.</dd></dl>
+    </div>
+    <div class="bet" style="border-top-color: var(--gold)">
+      <div class="n" style="color: #9a6400">Bet 3 · Build</div>
+      <h3>Man-made-fibre categories China is leaving</h3>
+      <p id="bet3"></p>
+      <dl><dt>Risk</dt><dd>Needs synthetic fabric capacity Bangladesh does not yet have.</dd>
+          <dt>Watch</dt><dd>Bangladesh's US share in outerwear, sweaters and underwear, quarter by quarter.</dd></dl>
+    </div>
+  </div>
+  <div class="grid g-6-6">
+    <div class="card"><div class="card-h"><h3>Share of EU and US apparel imports</h3><span class="hint">Bangladesh, % of imports from the world</span></div><div id="c-headline" class="chart short"></div></div>
+    <div class="card"><div class="card-h"><h3>What would change this view</h3></div>
+      <ul class="list">
+        <li><b>An EU trade deal with Bangladesh</b> would keep EU access and make Bet 1 less urgent.</li>
+        <li><b>US tariffs on Bangladesh above Vietnam's</b> would weaken Bets 2 and 3.</li>
+        <li><b>The EU-India agreement slipping well past 2027</b> would ease the pressure in woven garments.</li>
+        <li><b>Bangladesh's EU share recovering in 2027</b> would mean 2026's fall was currency and timing, not lost orders.</li>
+      </ul>
+      <p class="note" style="margin-top:12px">This is an analysis of public trade data, not investment advice. Assumptions are listed under Method and sources.</p>
+    </div>
+  </div>
+</section>
+
+<!-- MARKET SHARE -->
+<section class="page" id="p-share">
+  <div class="filters"><div class="seg" id="seg-market"></div></div>
+  <div class="grid g-7-5">
+    <div class="card"><div class="card-h"><h3 id="share-title">Share of imports</h3><span class="hint">% of the market's apparel imports from the world, HS 61 and 62</span></div><div id="c-share" class="chart tall"></div></div>
+    <div class="card"><div class="card-h"><h3>Who gained, 2019 to 2025</h3><span class="hint">Change in share, percentage points</span></div><div id="c-gain" class="chart tall"></div></div>
+  </div>
+  <div class="card"><div class="card-h"><h3>By product group</h3><span class="hint" id="groups-hint"></span></div>
+    <div class="tbl-wrap"><table class="tbl" id="t-groups"></table></div></div>
+</section>
+
+<!-- PRICE -->
+<section class="page" id="p-price">
+  <div class="filters"><div class="seg" id="seg-pmarket"></div><select id="sel-group"></select></div>
+  <div class="grid g-7-5">
+    <div class="card"><div class="card-h"><h3 id="price-title">Price per item</h3><span class="hint" id="price-hint"></span></div><div id="c-price" class="chart tall"></div></div>
+    <div class="card"><div class="card-h"><h3>Bangladesh's price against Vietnam's, 2025</h3><span class="hint">Vietnam = 100; mixed "other" group left out</span></div><div id="c-relprice" class="chart tall"></div></div>
+  </div>
+  <p class="note">Unit values are import value divided by quantity: items in the US (UN Comtrade), kilograms in the EU (Eurostat, which does not publish item counts at this level). A lower value can mean a cheaper price or a simpler product mix.</p>
+</section>
+
+<!-- TARIFF -->
+<section class="page" id="p-tariff">
+  <div class="filters"><div class="seg" id="seg-scen"></div><span class="hint" id="scen-note"></span></div>
+  <div class="kpis" id="scen-kpis"></div>
+  <div class="grid g-7-5">
+    <div class="card"><div class="card-h"><h3>Duty on Bangladesh's 2025 EU sales, by product group</h3><span class="hint">EUR million, if 2025 trade had paid this scenario's tariff</span></div><div id="c-duty" class="chart tall"></div></div>
+    <div class="card"><div class="card-h"><h3>EU tariff each competitor faces</h3><span class="hint">Today and after 2032</span></div>
+      <div class="tbl-wrap"><table class="tbl" id="t-regimes"></table></div></div>
+  </div>
+</section>
+
+<!-- NOW -->
+<section class="page" id="p-now">
+  <div class="kpis" id="now-kpis"></div>
+  <div class="grid g-7-5">
+    <div class="card"><div class="card-h"><h3>EU imports by month</h3><span class="hint">EUR billion, chapters 61 and 62</span></div><div id="c-month" class="chart tall"></div></div>
+    <div class="card"><div class="card-h"><h3 id="ytd-title">Year to date against last year</h3><span class="hint">Change in EU imports, same months</span></div><div id="c-ytd" class="chart tall"></div></div>
+  </div>
+  <p class="note">Values are in euros. The euro averaged 4% more dollars in 2025 than in 2024 (ECB), which lowers the euro value of dollar-priced orders, so part of any fall is currency. Bangladesh fell further than Vietnam and China over the same months, so it is not only currency.</p>
+</section>
+
+<!-- METHOD -->
+<section class="page" id="p-method">
+  <div class="grid g-6-6">
+    <div class="card"><h3>Sources</h3>
+      <ul class="list" style="margin-top:10px">
+        <li><b>EU imports:</b> Eurostat Comext DS-045409, EU27 (2020 composition), annual by HS4 and monthly by chapter.</li>
+        <li><b>US, UK, Canada, Japan, Australia imports:</b> UN Comtrade public API, reported by the importing country.</li>
+        <li><b>Tariffs:</b> WITS / UNCTAD TRAINS, MFN applied rates 2022, simple average of HS6 lines in each HS4.</li>
+        <li><b>Exchange rate:</b> ECB annual average (Eurostat ert_bil_eur_a).</li>
+        <li><b>Policy dates:</b> UN General Assembly deferral to 24 Nov 2029; EU GSP regulation from 2027; EU-India FTA concluded 27 Jan 2026; US Section 301 tariff of 10% on Bangladesh from 24 Jul 2026. Links in the README.</li>
+      </ul></div>
+    <div class="card"><h3>Data checks (all pass before export)</h3>
+      <ul class="checks" style="margin-top:10px" id="checks">
+        <li>Bangladesh has data in every market and year, 2015 to 2025.</li>
+        <li>Each market's imports from the world cover the five exporters, line by line.</li>
+        <li>EU product detail and 12 months tie to Eurostat's chapter totals (within 0.5%).</li>
+        <li>No negative values; every share is between 0 and 1.</li>
+        <li>Unit values fall in a plausible range, so a unit mix-up cannot reach a chart.</li>
+        <li>Every one of the 34 product lines has an MFN rate in both schedules.</li>
+        <li>EU trade without product detail is sized: 4.5% of 2025, mostly from China.</li>
+      </ul></div>
+  </div>
+  <div class="card"><h3>Assumptions you may disagree with</h3>
+    <ul class="list" style="margin-top:10px">
+      <li><b>Rules of origin under GSP+:</b> knitwear uses 80 to 90% local fabric and woven 35 to 40%, so 15% of knit value and 62.5% of woven value would fail two-stage origin and pay MFN.</li>
+      <li><b>Volume effect:</b> a duty becomes a price gap against duty-free Vietnam and India. Lost share = 1 − (1 + duty)<sup>−σ</sup>, with σ between 2 and 4. This is a rough range, not a forecast.</li>
+      <li><b>Standard GSP</b> is treated as no help for apparel, because Bangladesh's share of EU GSP apparel imports is far above the graduation threshold.</li>
+      <li><b>2025 trade is the base</b> for duty and risk; it ignores growth between now and 2032.</li>
+    </ul></div>
+</section>
+</main>
+
+<footer class="foot">
+  <span>Analysis by Md. Zubayer. Real public data; the code, checks and sources are on GitHub.</span>
+  <span id="gen"></span>
+</footer>
+<script src="app.js"></script>
+</body>
+</html>
